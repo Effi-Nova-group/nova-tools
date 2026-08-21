@@ -22,7 +22,7 @@ const jsonLd = {
   datePublished: date,
   dateModified: date,
   image,
-  author: { '@type': 'Organization', name: 'Nova Tools' },
+  author: { '@type': 'Person', name: 'Efraim Shwintarsky' },
   publisher: { '@type': 'Organization', name: 'Nova Tools' },
 };
 ---
@@ -39,6 +39,8 @@ const jsonLd = {
     <div class="post-hero">
       <div class="post-hero__meta">
         <span class="blog-card__tag">{tag}</span>
+        <span>By Efraim Shwintarsky</span>
+        <span>·</span>
         <span>{readTime}</span>
         <span>·</span>
         <span>{date}</span>
