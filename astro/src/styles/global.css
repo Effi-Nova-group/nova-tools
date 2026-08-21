@@ -1,5 +1,16 @@
 /* Global overrides that used to live inline in index.html */
 
+@media (max-width: 767px) {
+  .heading-hero-text {
+    text-align: left;
+    left: 0;
+    right: auto;
+    margin: auto auto 32px 24px;
+    font-size: clamp(2.25rem, 11vw, 3.5rem);
+    max-width: calc(100% - 48px);
+  }
+}
+
 /* Block 02 - Description section */
 .section-description {
   padding: 7rem 1.5rem 5rem;
