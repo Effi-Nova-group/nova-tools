@@ -15,3 +15,14 @@ marquee-check.png
 
 # Local server logs
 *.log
+
+# Astro
+astro/node_modules/
+astro/dist/
+astro/.astro/
+astro/.env
+astro/.env.*
+
+# Original source content (kept locally, not in repo)
+Article's - NT.pages
+Gemini_Generated_Image_*.jpeg

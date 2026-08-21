@@ -1,0 +1,195 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import BlogCard from '../components/BlogCard.astro';
+import ContactForm from '../components/ContactForm.astro';
+
+const posts = (await getCollection('blog')).sort(
+  (a, b) => a.data.order - b.data.order
+);
+const featured = posts.slice(0, 3);
+
+const excerpts: Record<string, string> = {
+  'real-time-data-ingestion': 'In a fast-moving digital economy, public conversation changes in seconds. Discover how a unified, cloud-based ingestion engine turns fragmented chatter into decision-ready insight.',
+  'ai-sentiment-analysis': 'Move past keyword counts. See how enterprise NLP decodes sarcasm, context, and mixed feedback to give brand teams a true read on public perception.',
+  'predictive-analytics-ad-spend': 'Stop bidding on saturated keywords. Learn how predictive trend mining catches emerging demand days before it hits mainstream search volume.',
+  'digital-risk-triage': 'A modern crisis rarely gives warning. See the automated detection architecture that helps risk teams execute evidence-backed responses in minutes.',
+  'unifying-the-feed': 'Fragmented dashboards hide the truth. Unify public feeds across every major network to compare creative, reallocate spend, and grow ROAS.',
+};
+
+const orgJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: 'Nova Tools',
+  description: 'Cloud-based social listening, AI sentiment analysis, and predictive analytics platform for enterprise brands.',
+  logo: '/images/Screenshot-2026-07-24-at-10.31.30-am-1.png',
+};
+
+const softwareJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'SoftwareApplication',
+  name: 'Nova Tools',
+  applicationCategory: 'BusinessApplication',
+  operatingSystem: 'Web',
+  description:
+    'Nova Tools is a cloud-based social media listening, predictive analytics, and market sentiment tracking platform. It unifies public data feeds from X, LinkedIn, Instagram, Pinterest, YouTube, Vimeo, Reddit, and Tumblr into a centralized newsroom for enterprise brand teams.',
+  featureList: [
+    'Real-time social listening',
+    'AI sentiment analysis with enterprise NLP',
+    'Predictive analytics and breakout trend detection',
+    'Automated crisis alerts and risk mitigation',
+    'Cross-platform campaign performance',
+  ],
+};
+
+const logos = [
+  { src: '/jll-logo.png', alt: 'JLL' },
+  { src: '/ibm-logo.png', alt: 'IBM' },
+  { src: '/disney-logo.png', alt: 'Disney' },
+  { src: '/fifa-logo.png', alt: 'FIFA' },
+  { src: '/netflix-logo.png', alt: 'Netflix' },
+  { src: '/Gartner_logo.svg 1.png', alt: 'Gartner' },
+  { src: '/GNC_Logo.svg 1.png', alt: 'GNC' },
+  { src: '/deloitte 1.png', alt: 'Deloitte' },
+  { src: '/LV 1.png', alt: 'Louis Vuitton' },
+  { src: '/porche 1.png', alt: 'Porsche' },
+  { src: '/Winnings-mono-logo-2022_JS 1.png', alt: 'Winnings' },
+  { src: '/appliances logo 1.png', alt: 'Appliances Online' },
+  { src: '/images 2.png', alt: '' },
+];
+---
+<BaseLayout
+  title="AI Social Listening & Sentiment Analysis | Nova Tools"
+  description="Nova Tools is a cloud-based social listening platform that unifies real-time chatter, AI sentiment analysis, and predictive trends across every major network."
+  jsonLd={[orgJsonLd, softwareJsonLd]}
+>
+  <div></div>
+  <main class="seaction-header-main">
+    <h1 class="heading-hero-text">Award-winning AI-powered social listening</h1>
+    <div id="canvas" class="canvas"></div>
+    <div
+      data-video-urls="/videos/6025488-hd_1920_1080_24fps.mp4"
+      data-autoplay="true"
+      data-loop="true"
+      data-wf-ignore="true"
+      class="header_background-image w-background-video w-background-video-atom"
+    >
+      <video
+        id="d46c7ee5-3976-62ee-1ff0-a2ad7311f74c-video"
+        autoplay
+        loop
+        muted
+        playsinline
+        data-wf-ignore="true"
+        data-object-fit="cover"
+      >
+        <source src="/videos/6025488-hd_1920_1080_24fps.mp4" data-wf-ignore="true" />
+      </video>
+    </div>
+  </main>
+
+  <section class="section-description">
+    <div class="desc-inner">
+      <div class="desc-eyebrow"><span class="dot"></span>What we do</div>
+      <h2 class="desc-headline">Beyond mentions and keywords — <span class="accent">real intelligence from every conversation online.</span></h2>
+      <div class="desc-body">
+        <p class="desc-lead">Nova Tools AI-powered social listening uses artificial intelligence, machine learning, and natural language processing (NLP) to track, decode, and analyze online conversations across the internet.</p>
+        <p class="desc-lead">Unlike traditional social monitoring — which simply counts brand mentions and keywords — AI social listening explains why people are talking, how trends spread, and what actions your brand should take next.</p>
+        <p class="desc-lead">It processes vast amounts of unstructured data from social platforms, blogs, forums, reviews, and spoken media (such as podcasts and videos) to deliver actionable business intelligence.</p>
+      </div>
+      <div class="desc-pillars">
+        <div class="desc-pillar">
+          <div class="ico" aria-hidden="true">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+          </div>
+          <div>
+            <h4>Track</h4>
+            <p>Monitor conversations across social, blogs, forums, reviews, podcasts and video.</p>
+          </div>
+        </div>
+        <div class="desc-pillar">
+          <div class="ico" aria-hidden="true">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v4"/><path d="M12 18v4"/><path d="m4.93 4.93 2.83 2.83"/><path d="m16.24 16.24 2.83 2.83"/><path d="M2 12h4"/><path d="M18 12h4"/><path d="m4.93 19.07 2.83-2.83"/><path d="m16.24 7.76 2.83-2.83"/></svg>
+          </div>
+          <div>
+            <h4>Decode</h4>
+            <p>NLP and ML surface why people talk — sentiment, intent and cultural context.</p>
+          </div>
+        </div>
+        <div class="desc-pillar">
+          <div class="ico" aria-hidden="true">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="m7 15 4-4 3 3 5-6"/></svg>
+          </div>
+          <div>
+            <h4>Act</h4>
+            <p>Turn unstructured chatter into actionable business intelligence — fast.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-marquee" aria-label="Trusted by">
+    <div class="marquee">
+      <div class="marquee-track">
+        {[0, 1, 2, 3].map((groupIdx) => (
+          <div class="marquee-group" aria-hidden={groupIdx === 0 ? 'false' : 'true'}>
+            {logos.map((logo) => (
+              <div class="marquee-item">
+                <img src={logo.src} alt={groupIdx === 0 ? logo.alt : ''} />
+              </div>
+            ))}
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section-insights" aria-label="Latest insights">
+    <div class="section-insights__inner">
+      <div class="section-insights__header">
+        <div>
+          <span class="section-insights__eyebrow">Insights</span>
+          <h2 class="section-insights__title">Latest from the newsroom</h2>
+        </div>
+        <a href="/blogs/" class="section-insights__link">View all articles</a>
+      </div>
+      <div class="blog-grid" style="padding:0">
+        {featured.map((post) => (
+          <BlogCard
+            href={`/blogs/${post.id}/`}
+            image={post.data.image}
+            tag={post.data.tag}
+            readTime={post.data.readTime}
+            title={post.data.title}
+            excerpt={excerpts[post.id] ?? post.data.description}
+            headingLevel="h3"
+          />
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section id="contact" class="section_contact">
+    <div class="padding-global-2">
+      <div class="container-large-3">
+        <div class="padding-section-large-3">
+          <div class="contact_component">
+            <div class="contact_content-left" style="text-align:center;margin-bottom:2.5rem">
+              <a href="tel:1300926895" class="contact_phone-cta">
+                <span class="tag">Toll-Free</span>
+                <span>1 300 926 895</span>
+              </a>
+              <div class="margin-bottom margin-medium">
+                <div class="contact_heading-wrapper">
+                  <h2 class="heading-style-h2-2">Contact us</h2>
+                </div>
+              </div>
+            </div>
+            <ContactForm />
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

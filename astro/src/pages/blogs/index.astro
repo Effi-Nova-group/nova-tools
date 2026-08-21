@@ -1,0 +1,51 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import BlogCard from '../../components/BlogCard.astro';
+
+const posts = (await getCollection('blog')).sort(
+  (a, b) => a.data.order - b.data.order
+);
+
+const excerpts: Record<string, string> = {
+  'real-time-data-ingestion': 'In a fast-moving digital economy, public conversation changes in seconds. Discover how a unified, cloud-based ingestion engine turns fragmented chatter into decision-ready insight.',
+  'ai-sentiment-analysis': 'Move past keyword counts. See how enterprise NLP decodes sarcasm, context, and mixed feedback to give brand teams a true read on public perception.',
+  'predictive-analytics-ad-spend': 'Stop bidding on saturated keywords. Learn how predictive trend mining catches emerging demand days before it hits mainstream search volume.',
+  'digital-risk-triage': 'A modern crisis rarely gives warning. See the automated detection architecture that helps risk teams execute evidence-backed responses in minutes.',
+  'unifying-the-feed': 'Fragmented dashboards hide the truth. Unify public feeds across every major network to compare creative, reallocate spend, and grow ROAS.',
+};
+
+const blogJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Blog',
+  name: 'Nova Tools Insights',
+  description: 'Articles on real-time social listening, AI sentiment analysis, predictive advertising, and enterprise crisis mitigation.',
+  publisher: { '@type': 'Organization', name: 'Nova Tools' },
+};
+---
+<BaseLayout
+  title="Insights & Guides on AI Social Listening | Nova Tools Blog"
+  description="Deep-dives on real-time social listening, AI sentiment analysis, predictive advertising, and enterprise crisis mitigation from the Nova Tools team."
+  bodyClass="blog-body"
+  wrapMain={false}
+  jsonLd={blogJsonLd}
+>
+  <section class="blog-hero">
+    <span class="blog-hero__eyebrow">Insights</span>
+    <h1 class="blog-hero__title">Ideas, playbooks, and analysis from the Nova Tools team</h1>
+    <p class="blog-hero__lead">Deep-dives on real-time social listening, AI sentiment analysis, predictive advertising, and the frameworks enterprise teams use to protect brand equity in fast-moving markets.</p>
+  </section>
+
+  <section class="blog-grid">
+    {posts.map((post) => (
+      <BlogCard
+        href={`/blogs/${post.id}/`}
+        image={post.data.image}
+        tag={post.data.tag}
+        readTime={post.data.readTime}
+        title={post.data.title}
+        excerpt={excerpts[post.id] ?? post.data.description}
+      />
+    ))}
+  </section>
+</BaseLayout>

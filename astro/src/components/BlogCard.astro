@@ -1,0 +1,25 @@
+---
+export interface Props {
+  href: string;
+  image: string;
+  tag: string;
+  readTime: string;
+  title: string;
+  excerpt: string;
+  headingLevel?: 'h2' | 'h3';
+}
+const { href, image, tag, readTime, title, excerpt, headingLevel = 'h2' } = Astro.props;
+const Heading = headingLevel;
+---
+<a href={href} class="blog-card">
+  <div class="blog-card__image"><img src={image} alt="" /></div>
+  <div class="blog-card__body">
+    <div class="blog-card__meta">
+      <span class="blog-card__tag">{tag}</span>
+      <span>{readTime}</span>
+    </div>
+    <Heading class="blog-card__title">{title}</Heading>
+    <p class="blog-card__excerpt">{excerpt}</p>
+    <span class="blog-card__link">Read article</span>
+  </div>
+</a>

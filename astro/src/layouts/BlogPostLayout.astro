@@ -1,0 +1,61 @@
+---
+import BaseLayout from './BaseLayout.astro';
+
+export interface Props {
+  title: string;
+  metaTitle: string;
+  description: string;
+  tag: string;
+  readTime: string;
+  date: string;
+  lead: string;
+  image: string;
+}
+const { title, metaTitle, description, tag, readTime, date, lead, image } = Astro.props;
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'BlogPosting',
+  headline: title,
+  description,
+  articleSection: tag,
+  datePublished: date,
+  dateModified: date,
+  image,
+  author: { '@type': 'Organization', name: 'Nova Tools' },
+  publisher: { '@type': 'Organization', name: 'Nova Tools' },
+};
+---
+<BaseLayout
+  title={metaTitle}
+  description={description}
+  ogType="article"
+  ogImage={image}
+  bodyClass="blog-body"
+  wrapMain={false}
+  jsonLd={jsonLd}
+>
+  <article>
+    <div class="post-hero">
+      <div class="post-hero__meta">
+        <span class="blog-card__tag">{tag}</span>
+        <span>{readTime}</span>
+        <span>·</span>
+        <span>{date}</span>
+      </div>
+      <h1 class="post-hero__title">{title}</h1>
+      <p class="post-hero__lead">{lead}</p>
+    </div>
+    <div class="post-hero__image">
+      <img src={image} alt="" />
+    </div>
+
+    <div class="post-body">
+      <slot />
+    </div>
+
+    <div class="post-back">
+      <a href="/blogs/">Back to all articles</a>
+    </div>
+  </article>
+</BaseLayout>

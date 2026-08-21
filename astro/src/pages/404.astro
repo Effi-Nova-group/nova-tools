@@ -1,0 +1,21 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+<BaseLayout
+  title="Page Not Found (404) | Nova Tools"
+  description="The page you're looking for can't be found. Return to Nova Tools to explore social listening, sentiment analysis, and predictive analytics for enterprise brands."
+  robots="noindex,follow"
+  bodyClass="blog-body"
+  wrapMain={false}
+>
+  <section class="blog-hero" style="min-height:calc(100vh - 200px);display:flex;flex-direction:column;justify-content:center;">
+    <span class="blog-hero__eyebrow">404</span>
+    <h1 class="blog-hero__title">Page not found</h1>
+    <p class="blog-hero__lead">The page you're looking for doesn't exist or has moved. Head back to the homepage to keep exploring.</p>
+    <div style="margin-top:32px;display:flex;justify-content:center;gap:16px;">
+      <div class="button-primary-gradient header-button">
+        <a href="/" class="button-primary small-v2 w-button">Back to home</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

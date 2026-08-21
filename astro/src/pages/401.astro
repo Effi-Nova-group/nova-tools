@@ -1,0 +1,16 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+<BaseLayout
+  title="Password Protected | Nova Tools"
+  description="This page is password protected. Enter the passcode to continue to Nova Tools."
+  robots="noindex,follow"
+  bodyClass="blog-body"
+  wrapMain={false}
+>
+  <section class="blog-hero" style="min-height:calc(100vh - 200px);display:flex;flex-direction:column;justify-content:center;">
+    <span class="blog-hero__eyebrow">Protected</span>
+    <h1 class="blog-hero__title">This page is password protected</h1>
+    <p class="blog-hero__lead">Enter the passcode to continue.</p>
+  </section>
+</BaseLayout>
