@@ -329,7 +329,7 @@
 .contact-form__submit-wrap {
   margin-top: 0.5rem;
   display: flex;
-  justify-content: flex-start;
+  justify-content: center;
 }
 .contact-form__submit-wrap .button-primary-gradient { display: inline-block; }
 .contact-form__submit-wrap .button-primary { border: 0; cursor: pointer; }
