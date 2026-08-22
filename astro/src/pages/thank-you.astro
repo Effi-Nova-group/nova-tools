@@ -1,0 +1,21 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+<BaseLayout
+  title="Thank you | Nova Tools"
+  description="Thanks for reaching out to Nova Tools — we've received your message and will be in touch shortly."
+  robots="noindex,follow"
+  bodyClass="blog-body"
+  wrapMain={false}
+>
+  <section class="blog-hero" style="min-height:calc(100vh - 200px);display:flex;flex-direction:column;justify-content:center;">
+    <span class="blog-hero__eyebrow">You're all set</span>
+    <h1 class="blog-hero__title">Thanks — we've got your message</h1>
+    <p class="blog-hero__lead">A member of the Nova Tools team will be in touch soon to book your strategy call.</p>
+    <div style="margin-top:32px;display:flex;justify-content:center;gap:16px;">
+      <div class="button-primary-gradient header-button">
+        <a href="/" class="button-primary small-v2 w-button">Back to home</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

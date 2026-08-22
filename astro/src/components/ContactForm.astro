@@ -2,6 +2,7 @@
 ---
 <form id="contactForm" class="contact-form">
   <input type="hidden" name="access_key" value="2d5a3158-c709-4f2d-b6ec-1497c02eebcf" />
+  <input type="hidden" name="redirect" value="https://novatools.io/thank-you" />
   <div class="contact-form__row">
     <div class="contact-form__field">
       <label for="cf-first-name">First Name<span class="contact-form__required">*</span></label>
@@ -48,8 +49,8 @@
         });
         const data = await res.json();
         if (data.success) {
-          result.textContent = 'Form submitted successfully';
           form.reset();
+          window.location.href = '/thank-you';
         } else {
           result.textContent = data.message || 'Something went wrong.';
         }
