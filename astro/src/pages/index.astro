@@ -215,10 +215,20 @@ const logos = [
         );
       };
 
+      const killCaptions = () => {
+        sendCommand('unloadModule', ['captions']);
+      };
+
       // Loop manually instead of using the playlist param, which would
       // otherwise turn on YouTube's prev/next playlist-navigation UI.
       heroVideo.addEventListener('load', () => {
         sendCommand('addEventListener', ['onStateChange']);
+        // YouTube force-enables captions on muted autoplay and loads the
+        // captions module asynchronously, so retry unloading it for a
+        // few seconds after the player becomes ready.
+        [0, 300, 800, 1500, 2500, 4000].forEach((delay) => {
+          setTimeout(killCaptions, delay);
+        });
       });
 
       window.addEventListener('message', (e) => {
@@ -232,6 +242,10 @@ const logos = [
         if (data.event === 'onStateChange' && data.info === 0) {
           sendCommand('seekTo', [0, true]);
           sendCommand('playVideo');
+          killCaptions();
+        }
+        if (data.event === 'onStateChange' && data.info === 1) {
+          killCaptions();
         }
       });
 
