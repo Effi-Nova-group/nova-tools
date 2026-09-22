@@ -65,27 +65,37 @@ const logos = [
 >
   <div></div>
   <main class="seaction-header-main">
-    <h1 class="heading-hero-text">Award-winning AI-powered social listening</h1>
     <div id="canvas" class="canvas"></div>
-    <div
-      data-video-urls="/videos/6025488-hd_1920_1080_24fps.mp4"
-      data-autoplay="true"
-      data-loop="true"
-      data-wf-ignore="true"
-      class="header_background-image w-background-video w-background-video-atom"
-    >
-      <video
-        id="d46c7ee5-3976-62ee-1ff0-a2ad7311f74c-video"
-        autoplay
-        loop
-        muted
-        playsinline
+    <div class="header_background-image hero-yt-bg" data-wf-ignore="true">
+      <iframe
+        id="hero-yt-video"
+        class="hero-yt-iframe"
+        src="https://www.youtube.com/embed/kSszJIlGclo?autoplay=1&mute=1&controls=0&showinfo=0&modestbranding=1&rel=0&iv_load_policy=3&cc_load_policy=0&fs=0&disablekb=1&playsinline=1&enablejsapi=1"
+        title="Hero background video"
+        frameborder="0"
+        allow="autoplay; encrypted-media"
         data-wf-ignore="true"
-        data-object-fit="cover"
-      >
-        <source src="/videos/6025488-hd_1920_1080_24fps.mp4" data-wf-ignore="true" />
-      </video>
+      ></iframe>
     </div>
+    <div class="hero-yt-mask" aria-hidden="true"></div>
+    <button
+      id="hero-mute-toggle"
+      class="hero-mute-btn is-muted"
+      type="button"
+      aria-label="Unmute video"
+      aria-pressed="false"
+    >
+      <svg class="icon-muted" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+        <line x1="23" y1="9" x2="17" y2="15"></line>
+        <line x1="17" y1="9" x2="23" y2="15"></line>
+      </svg>
+      <svg class="icon-unmuted" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+        <path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+        <path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path>
+      </svg>
+    </button>
   </main>
 
   <section class="section-description">
@@ -192,4 +202,49 @@ const logos = [
       </div>
     </div>
   </section>
+
+  <script>
+    const heroVideo = document.getElementById('hero-yt-video') as HTMLIFrameElement | null;
+    const muteBtn = document.getElementById('hero-mute-toggle');
+
+    if (heroVideo) {
+      const sendCommand = (func: string, args: unknown[] = []) => {
+        heroVideo.contentWindow?.postMessage(
+          JSON.stringify({ event: 'command', func, args }),
+          '*'
+        );
+      };
+
+      // Loop manually instead of using the playlist param, which would
+      // otherwise turn on YouTube's prev/next playlist-navigation UI.
+      heroVideo.addEventListener('load', () => {
+        sendCommand('addEventListener', ['onStateChange']);
+      });
+
+      window.addEventListener('message', (e) => {
+        if (e.source !== heroVideo.contentWindow) return;
+        let data: any;
+        try {
+          data = JSON.parse(e.data);
+        } catch {
+          return;
+        }
+        if (data.event === 'onStateChange' && data.info === 0) {
+          sendCommand('seekTo', [0, true]);
+          sendCommand('playVideo');
+        }
+      });
+
+      if (muteBtn) {
+        let isMuted = true;
+        muteBtn.addEventListener('click', () => {
+          isMuted = !isMuted;
+          sendCommand(isMuted ? 'mute' : 'unMute');
+          muteBtn.classList.toggle('is-muted', isMuted);
+          muteBtn.setAttribute('aria-pressed', String(!isMuted));
+          muteBtn.setAttribute('aria-label', isMuted ? 'Unmute video' : 'Mute video');
+        });
+      }
+    }
+  </script>
 </BaseLayout>
