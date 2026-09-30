@@ -67,15 +67,18 @@ const logos = [
   <main class="seaction-header-main">
     <div id="canvas" class="canvas"></div>
     <div class="header_background-image hero-yt-bg" data-wf-ignore="true">
-      <iframe
+      <video
         id="hero-yt-video"
         class="hero-yt-iframe"
-        src="https://www.youtube.com/embed/kSszJIlGclo?autoplay=1&mute=1&controls=0&showinfo=0&modestbranding=1&rel=0&iv_load_policy=3&cc_load_policy=0&fs=0&disablekb=1&playsinline=1&enablejsapi=1"
-        title="Hero background video"
-        frameborder="0"
-        allow="autoplay; encrypted-media"
+        src="/videos/hero-invideo.mp4"
+        autoplay
+        muted
+        loop
+        playsinline
+        preload="auto"
+        aria-label="Hero background video"
         data-wf-ignore="true"
-      ></iframe>
+      ></video>
     </div>
     <div class="hero-yt-mask" aria-hidden="true"></div>
     <button
@@ -204,59 +207,20 @@ const logos = [
   </section>
 
   <script>
-    const heroVideo = document.getElementById('hero-yt-video') as HTMLIFrameElement | null;
+    const heroVideo = document.getElementById('hero-yt-video') as HTMLVideoElement | null;
     const muteBtn = document.getElementById('hero-mute-toggle');
 
     if (heroVideo) {
-      const sendCommand = (func: string, args: unknown[] = []) => {
-        heroVideo.contentWindow?.postMessage(
-          JSON.stringify({ event: 'command', func, args }),
-          '*'
-        );
-      };
-
-      const killCaptions = () => {
-        sendCommand('unloadModule', ['captions']);
-      };
-
-      // Loop manually instead of using the playlist param, which would
-      // otherwise turn on YouTube's prev/next playlist-navigation UI.
-      heroVideo.addEventListener('load', () => {
-        sendCommand('addEventListener', ['onStateChange']);
-        // YouTube force-enables captions on muted autoplay and loads the
-        // captions module asynchronously, so retry unloading it for a
-        // few seconds after the player becomes ready.
-        [0, 300, 800, 1500, 2500, 4000].forEach((delay) => {
-          setTimeout(killCaptions, delay);
-        });
-      });
-
-      window.addEventListener('message', (e) => {
-        if (e.source !== heroVideo.contentWindow) return;
-        let data: any;
-        try {
-          data = JSON.parse(e.data);
-        } catch {
-          return;
-        }
-        if (data.event === 'onStateChange' && data.info === 0) {
-          sendCommand('seekTo', [0, true]);
-          sendCommand('playVideo');
-          killCaptions();
-        }
-        if (data.event === 'onStateChange' && data.info === 1) {
-          killCaptions();
-        }
+      heroVideo.play().catch(() => {
+        // Autoplay can be blocked until user interaction; ignore.
       });
 
       if (muteBtn) {
-        let isMuted = true;
         muteBtn.addEventListener('click', () => {
-          isMuted = !isMuted;
-          sendCommand(isMuted ? 'mute' : 'unMute');
-          muteBtn.classList.toggle('is-muted', isMuted);
-          muteBtn.setAttribute('aria-pressed', String(!isMuted));
-          muteBtn.setAttribute('aria-label', isMuted ? 'Unmute video' : 'Mute video');
+          heroVideo.muted = !heroVideo.muted;
+          muteBtn.classList.toggle('is-muted', heroVideo.muted);
+          muteBtn.setAttribute('aria-pressed', String(!heroVideo.muted));
+          muteBtn.setAttribute('aria-label', heroVideo.muted ? 'Unmute video' : 'Mute video');
         });
       }
     }
