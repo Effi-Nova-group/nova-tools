@@ -15,6 +15,7 @@
   .seaction-header-main {
     width: 100vw !important;
     height: 50vh !important;
+    min-height: 50vh !important;
   }
 }
 
