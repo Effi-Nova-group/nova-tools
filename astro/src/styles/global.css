@@ -763,9 +763,12 @@
   background: linear-gradient(90deg, #a78bfa, #f472b6);
 }
 
-/* Template dropdown whose Integrations/Careers/Features/Team links are all
-   still href="#". Remove the class in Nav.astro to bring it back. */
-.header .nav-pages-hidden { display: none; }
+/* Template items whose links are all still href="#" — the Pages dropdown and
+   the mobile Sign in. !important because Webflow's own
+   `.nav-item-wrapper.mobile { display: block }` inside its 991px media query
+   has equal specificity and may order after this file. Remove the class in
+   Nav.astro to bring them back. */
+.header .header-navigation .nav-pages-hidden { display: none !important; }
 
 /* Two extra links have to fit beside a 10rem logo and the CTA before the
    Webflow hamburger takes over at 991px. Step the gaps down, not the type. */

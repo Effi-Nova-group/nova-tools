@@ -31,9 +31,6 @@ const inSection = (prefix: string) => (path.startsWith(prefix) ? 'page' : undefi
                every width — desktop had no navigation and the hamburger panel
                was empty. -->
           <ul role="list" class="header-navigation w-list-unstyled">
-            <li class="nav-item-wrapper"><a href={base} class="nav-link">Home</a></li>
-            <li class="nav-item-wrapper"><a href={`${base}#about`} class="nav-link">About</a></li>
-            <li class="nav-item-wrapper"><a href={`${base}#pricing`} class="nav-link">Pricing</a></li>
             <li class="nav-item-wrapper"><a href="/case-studies/" class="nav-link" aria-current={inSection('/case-studies')}>Case Studies</a></li>
             <li class="nav-item-wrapper"><a href="/blogs/" class="nav-link" aria-current={inSection('/blogs')}>Blogs</a></li>
             <!-- Kept but hidden: this dropdown's Integrations / Careers /
@@ -70,7 +67,9 @@ const inSection = (prefix: string) => (path.startsWith(prefix) ? 'page' : undefi
                 </nav>
               </div>
             </li>
-            <li class="nav-item-wrapper mobile"><a href="#" class="nav-link sign-in mobile">Sign in</a></li>
+            <!-- Hidden with the dropdown: still an href="#" placeholder, and
+                 now that the list renders it would show in the mobile panel. -->
+            <li class="nav-item-wrapper mobile nav-pages-hidden"><a href="#" class="nav-link sign-in mobile">Sign in</a></li>
             <li class="nav-item-wrapper mobile-button">
               <div class="button-primary-gradient header-button mobile-button">
                 <a href={`${base}#contact`} class="button-primary small-v2 mobile-button w-button">Get started</a>
