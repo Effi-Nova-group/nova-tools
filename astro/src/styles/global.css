@@ -6,14 +6,22 @@
    whichever box applies, it always fills edge-to-edge with no background. */
 .seaction-header-main {
   position: relative;
-  width: min(100vw, 100vh * 16 / 9) !important;
-  height: min(100vh, 100vw * 9 / 16) !important;
+  /* 100vw includes the scrollbar gutter, so on any window taller than 16:9
+     this was ~15px wider than the content box and the page scrolled
+     sideways. 100% is the available width, scrollbar already excluded.
+     Height comes from aspect-ratio rather than a vw/% calc: a percentage
+     height would resolve against the parent's (auto) height, not the width. */
+  width: min(100%, 100vh * 16 / 9) !important;
+  aspect-ratio: 16 / 9;
+  height: auto !important;
+  max-height: 100vh;
   margin: 0 auto;
 }
 
 @media (max-width: 767px) {
   .seaction-header-main {
-    width: 100vw !important;
+    width: 100% !important;
+    aspect-ratio: auto;
     height: 50vh !important;
     min-height: 50vh !important;
   }
@@ -652,14 +660,32 @@
   margin: 48px auto 0;
   padding: 0 24px;
 }
-.cs-detail__hero img,
+/* Campaign screenshots run 1.95-2.55 wide. Forcing them into a 16/9 cover
+   box cropped a third of the width off and made a very tall panel, so they
+   render at their own aspect instead, capped so they stay in view. */
+.cs-detail__hero img {
+  width: 100%;
+  height: auto;
+  max-height: 70vh;
+  object-fit: contain;
+  object-position: center;
+  border-radius: 18px;
+  display: block;
+  margin: 0 auto;
+}
+/* A study with no screenshot falls back to its logo — that keeps the cover
+   treatment, or a square logo would render as a huge block. */
+.cs-detail__hero--logo img {
+  aspect-ratio: 16 / 9;
+  height: 100%;
+  max-height: none;
+  object-fit: cover;
+}
 .cs-detail__hero .cs-fallback {
   width: 100%;
   border-radius: 18px;
   aspect-ratio: 16 / 9;
-  object-fit: cover;
-  object-position: center;
-  display: block;
+  display: flex;
 }
 
 /* Prose reuses the blog's .post-body rules; just widen the measure. */
@@ -736,6 +762,10 @@
   border-radius: 2px;
   background: linear-gradient(90deg, #a78bfa, #f472b6);
 }
+
+/* Template dropdown whose Integrations/Careers/Features/Team links are all
+   still href="#". Remove the class in Nav.astro to bring it back. */
+.header .nav-pages-hidden { display: none; }
 
 /* Two extra links have to fit beside a 10rem logo and the CTA before the
    Webflow hamburger takes over at 991px. Step the gaps down, not the type. */

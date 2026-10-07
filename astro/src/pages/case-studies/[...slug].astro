@@ -67,7 +67,7 @@ const jsonLd = {
       )}
     </div>
 
-    <div class="cs-detail__hero">
+    <div class={`cs-detail__hero${d.heroImage ? '' : ' cs-detail__hero--logo'}`}>
       {hero ? (
         <Image src={hero} alt={heroAlt} loading="lazy" />
       ) : (
