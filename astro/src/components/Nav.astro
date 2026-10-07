@@ -2,6 +2,10 @@
 // Full Webflow nav — mirrors the homepage <div class="header w-nav"> exactly.
 // Absolute paths ("/index.html" style) work uniformly on homepage + subpages.
 const base = '/';
+
+// Section links get aria-current on the section index and on any page under it.
+const path = Astro.url.pathname;
+const inSection = (prefix: string) => (path.startsWith(prefix) ? 'page' : undefined);
 ---
 <div
   data-animation="over-left"
@@ -26,6 +30,8 @@ const base = '/';
             <li class="nav-item-wrapper"><a href={base} class="nav-link">Home</a></li>
             <li class="nav-item-wrapper"><a href={`${base}#about`} class="nav-link">About</a></li>
             <li class="nav-item-wrapper"><a href={`${base}#pricing`} class="nav-link">Pricing</a></li>
+            <li class="nav-item-wrapper"><a href="/case-studies/" class="nav-link" aria-current={inSection('/case-studies')}>Case Studies</a></li>
+            <li class="nav-item-wrapper"><a href="/blogs/" class="nav-link" aria-current={inSection('/blogs')}>Blogs</a></li>
             <li class="nav-item-wrapper">
               <div data-hover="true" data-delay="0" data-w-id="5ad941c8-f990-62a8-38a0-3b54006c05c6" class="nav-link-dropdown w-dropdown">
                 <div class="nav-link dropdown w-dropdown-toggle">
@@ -40,7 +46,8 @@ const base = '/';
                           <li class="dropdown-nav-item"><a href={base} class="dropdown-nav-link">Home</a></li>
                           <li class="dropdown-nav-item"><a href={`${base}#about`} class="dropdown-nav-link">About</a></li>
                           <li class="dropdown-nav-item"><a href={`${base}#contact`} class="dropdown-nav-link">Contact</a></li>
-                          <li class="dropdown-nav-item"><a href="/blogs/" class="dropdown-nav-link">Blog</a></li>
+                          <li class="dropdown-nav-item"><a href="/case-studies/" class="dropdown-nav-link">Case Studies</a></li>
+                          <li class="dropdown-nav-item"><a href="/blogs/" class="dropdown-nav-link">Blogs</a></li>
                           <li class="dropdown-nav-item"><a href={`${base}#pricing`} class="dropdown-nav-link">Pricing</a></li>
                         </ul>
                         <ul role="list" class="dropdown-nav last">

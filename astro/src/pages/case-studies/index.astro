@@ -1,0 +1,73 @@
+---
+import { getCollection } from 'astro:content';
+import { Image } from 'astro:assets';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const studies = (await getCollection('caseStudies')).sort(
+  (a, b) => a.data.order - b.data.order
+);
+
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'CollectionPage',
+    name: 'Nova Tools Case Studies',
+    description:
+      'How global brands use Nova Tools to turn audience intelligence into measurable campaign return.',
+    publisher: { '@type': 'Organization', name: 'Nova Tools' },
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    itemListElement: studies.map((study, i) => ({
+      '@type': 'ListItem',
+      position: i + 1,
+      url: new URL(`/case-studies/${study.id}/`, Astro.site ?? Astro.url).href,
+      name: study.data.title,
+    })),
+  },
+];
+---
+<BaseLayout
+  title="Case Studies — Audience Intelligence in Action | Nova Tools"
+  description="How Gartner, GNC, IBM and BUFF Medical Resort used Nova Tools to turn audience intelligence into record engagement, global growth and up to 11x ROAS."
+  bodyClass="blog-body"
+  wrapMain={false}
+  jsonLd={jsonLd}
+>
+  <section class="blog-hero">
+    <span class="blog-hero__eyebrow">Case Studies</span>
+    <h1 class="blog-hero__title">Audience intelligence, and what it returned</h1>
+    <p class="blog-hero__lead">
+      Global brands use Nova Tools to understand who their audience actually is — then put
+      that intelligence to work across content, media and spend. Here is what happened.
+    </p>
+  </section>
+
+  <section class="cs-grid">
+    {studies.map((study) => (
+      <a href={`/case-studies/${study.id}/`} class="cs-card">
+        <div class="cs-card__media">
+          {study.data.logo ? (
+            <Image src={study.data.logo} alt={`${study.data.client} logo`} loading="lazy" />
+          ) : (
+            <div class="cs-fallback"><span>{study.data.client}</span></div>
+          )}
+        </div>
+        <div class="cs-card__body">
+          <span class="cs-eyebrow">{study.data.sector}</span>
+          <h2 class="cs-card__title">{study.data.title}</h2>
+          <p class="cs-card__subtitle">{study.data.subtitle}</p>
+          {study.data.stats.length > 0 && (
+            <ul class="cs-pills" role="list">
+              {study.data.stats.map((stat) => (
+                <li class="cs-pill"><strong>{stat.value}</strong> {stat.label}</li>
+              ))}
+            </ul>
+          )}
+          <span class="cs-card__link">View case study</span>
+        </div>
+      </a>
+    ))}
+  </section>
+</BaseLayout>
