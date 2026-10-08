@@ -749,18 +749,7 @@
   color: #fff;
 }
 .header .header-navigation .nav-link[aria-current="page"] {
-  position: relative;
   font-weight: 600;
-}
-.header .header-navigation .nav-link[aria-current="page"]::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: -8px;
-  height: 2px;
-  border-radius: 2px;
-  background: linear-gradient(90deg, #a78bfa, #f472b6);
 }
 
 /* Template items whose links are all still href="#" — the Pages dropdown and
