@@ -770,3 +770,47 @@
   .header .nav-link { font-size: 0.92rem; }
   .header .header-logo { width: 8.5rem; }
 }
+
+/* Hero overlay: headline + CTA sitting over the bottom-left of the video. */
+.seaction-header-main::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(5, 6, 10, 0.75) 0%, rgba(5, 6, 10, 0.25) 45%, transparent 70%);
+  pointer-events: none;
+  z-index: 1;
+}
+.hero-overlay {
+  position: absolute;
+  left: clamp(1rem, 4vw, 3rem);
+  right: clamp(4.5rem, 10vw, 8rem);
+  bottom: clamp(1.5rem, 6vh, 4rem);
+  z-index: 3;
+  max-width: 900px;
+  color: #fff;
+}
+.hero-overlay,
+.hero-overlay * { text-transform: none; }
+.hero-overlay__heading {
+  margin: 0 0 1rem;
+  font-size: clamp(1.75rem, 4.6vw, 4.5rem);
+  line-height: 1.05;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: #fff;
+  text-shadow: 0 2px 24px rgba(0, 0, 0, 0.35);
+}
+.hero-overlay__sub {
+  margin: 0 0 1.75rem;
+  max-width: 680px;
+  font-size: clamp(0.95rem, 1.3vw, 1.2rem);
+  line-height: 1.55;
+  color: #d7d9e0;
+}
+.hero-overlay__cta { display: inline-block; }
+@media (max-width: 767px) {
+  .hero-overlay { right: 4.5rem; bottom: 1.25rem; }
+  .hero-overlay__heading { font-size: 1.6rem; margin-bottom: 0.6rem; }
+  .hero-overlay__sub { font-size: 0.9rem; margin-bottom: 1rem; }
+  .hero-overlay__cta { display: none; }
+}
